@@ -1,3 +1,4 @@
+(
 // Get the default server's options
 o = Server.default.options;
 
@@ -10,10 +11,12 @@ o.device ="ES-8";     // use a specific soundcard
 
 // finally, boot the server
 Server.default.boot;
-// or, if the server was already running, reboot it
+)
+
+// if shit don't work
 Server.default.reboot;
 
+//test each output
+{ Out.ar(0,PinkNoise.ar(0.4, 0));}.play
 
-{ Out.ar(4,PinkNoise.ar(0.4, 0));}.play
-
-Line
+//stop is ctrl+.
