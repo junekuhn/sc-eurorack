@@ -22,7 +22,7 @@
 )
 
 //~bus_oscIn_light = ~oscIn.value(numIn: 1, defKey: "oscDef1", port: 11000, path: '\light', min: 0, max: 50);
-~bus_gloves_quat = ~oscIn.value(numIn: 4, defKey: "oscDef2", port: 8001, path: '\quaternion', min: -1, max: 1);
+~bus_gloves_quat = ~oscIn.value(numIn: 1, defKey: "oscDef2", port: 8001, path: '\gloves\button', min: -1, max: 1);
 
 { Poll.kr( Impulse.kr(10), In.kr(~bus_gloves_quat, 4), \test) }.play
 //test file writer
@@ -37,5 +37,25 @@ s.waitForBoot {
 	~midiOut.latency = 0;
 	~midiOut.program(1, num: 1);
 }
+)
+
+MIDIClient.init
+m = MIDIOut(1)
+m.connect(1)
+m.control(chan: 1, ctlNum: 2, val: 0)
+m.latency = 0;
+m.program(0,4)
+(
+Task({
+inf.do({
+	// var a, b, c;
+	~bus_gloves_quat.get({
+		| i |
+			// m.program(0,2);
+			m.control(chan: 0,ctlNum:2, val: 8.3.round(1).asInteger)
+	});
+	0.5.wait;
+})
+}).play
 )
 

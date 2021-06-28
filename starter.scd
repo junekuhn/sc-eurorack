@@ -20,3 +20,18 @@ Server.default.reboot;
 { Out.ar(0,PinkNoise.ar(0.4, 0));}.play
 
 //stop is ctrl+.
+
+//what is ..x
+[Task{}]
+
+//quarks
+Quarks.gui
+
+CuePlayer.composeEvents
+
+a = {SinOsc.ar(440)*0.1}.play
+a.run(false) //turn off synthesis (saving CPU) without freeing the Synth
+a.run //restore (defaults to a.run(true)
+a.free
+
+
